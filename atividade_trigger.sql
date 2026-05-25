@@ -5,9 +5,6 @@
 -- Data: [DATA ATUAL]
 -- ============================================================================
 
-USE NomeDoSeuBanco;
-GO
-
 -- ============================================================================
 -- QUESTÃO 01: Criar trigger para impedir mais de 2 atribuições por ano
 -- ============================================================================
@@ -52,7 +49,7 @@ BEGIN
         RETURN;
     END
 END;
-GO
+
 
 -- ============================================================================
 -- TESTES DA TRIGGER (execute os blocos separadamente)
@@ -65,7 +62,6 @@ SELECT ID, year, COUNT(*) AS total_aulas
 FROM teaches
 GROUP BY ID, year
 ORDER BY ID, year;
-GO
 
 -- ============================================================================
 -- TESTE 2: Inserção válida (menos de 2 atribuições no ano)
@@ -73,7 +69,6 @@ GO
 -- Supondo que o instrutor 10101 ainda não tenha 2 aulas em 2024
 -- INSERT INTO teaches VALUES ('10101', 'CS101', '1', 'Spring', 2024);
 -- Deve funcionar normalmente
--- GO
 
 -- ============================================================================
 -- TESTE 3: Inserção inválida (já tem 2 ou mais atribuições no ano)
@@ -81,11 +76,9 @@ GO
 -- Se o instrutor já tiver 2 aulas em 2024, esta inserção será bloqueada
 -- INSERT INTO teaches VALUES ('10101', 'CS102', '2', 'Fall', 2024);
 -- Deve gerar erro: "Não é permitido atribuir mais de 2 aulas ao mesmo instrutor no mesmo ano!"
--- GO
 
 -- ============================================================================
 -- TESTE 4: Update inválido (tentando mudar para um ano com muitas atribuições)
 -- ============================================================================
 -- UPDATE teaches SET year = 2024 WHERE ID = '10101' AND course_id = 'CS201';
 -- Se o instrutor já tiver 2 aulas em 2024, esta atualização será bloqueada
--- GO
